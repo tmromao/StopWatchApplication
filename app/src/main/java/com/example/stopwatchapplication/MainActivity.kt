@@ -32,6 +32,7 @@ class MainActivity : ComponentActivity() {
     private var isBound by mutableStateOf(false)
     private lateinit var stopwatchService : StopwatchService
     private val connection = object : ServiceConnection {
+        //Should ComponentName be nullable?
         override fun onServiceConnected(className: ComponentName?, service: IBinder?) {
             val binder = service as StopwatchService.StopwatchBinder
             stopwatchService = binder.getService()
@@ -68,14 +69,11 @@ class MainActivity : ComponentActivity() {
             ActivityResultContracts.RequestMultiplePermissions()
         ){ result ->
             result.entries.forEach{
-                Log.d("MainAcitivity","${it.key} = ${it.value}")
+                Log.d("MainActivity","${it.key} = ${it.value}")
             }
         }
         requestPermissionLauncher.launch(permissions.asList().toTypedArray())
     }
-
-
-
 
 
     override fun onStop() {
